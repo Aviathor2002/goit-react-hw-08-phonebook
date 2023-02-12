@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { List, Item, Text, Button } from './Contacts.style';
 
 export const Contacts = ({ contacts, receiveID }) => {
@@ -21,6 +22,11 @@ export const Contacts = ({ contacts, receiveID }) => {
       })}
     </List>
   );
+};
+
+Contacts.propTypes = {
+  contacts: PropTypes.array.isRequired,
+  receiveID: PropTypes.func.isRequired,
 };
 
 // import React, { Component } from 'react';
