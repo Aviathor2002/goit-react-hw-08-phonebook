@@ -25,7 +25,13 @@ export const Contacts = ({ contacts, receiveID }) => {
 };
 
 Contacts.propTypes = {
-  contacts: PropTypes.array.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   receiveID: PropTypes.func.isRequired,
 };
 
