@@ -3,13 +3,14 @@ import { useSelector } from 'react-redux';
 import React from 'react';
 
 import { Input, Label } from './Filter.style';
+import { getFilter } from 'components/redux/filter';
 
 export const Filter = ({ onChange }) => {
-  const filter = useSelector(state => state.filter);
+  const contactFilter = useSelector(getFilter);
   return (
     <Label>
       Find contacts by name:
-      <Input type="text" value={filter} onChange={onChange} />
+      <Input type="text" value={contactFilter} onChange={onChange} />
     </Label>
   );
 };

@@ -4,13 +4,13 @@ import { Filter } from './Filter/Filter';
 import { Contacts } from './Contacts/Contacts';
 import { MainContainer, Title } from './App.style';
 import { useDispatch, useSelector } from 'react-redux';
-import { add, remove } from './redux/contacts';
-import { setFilter } from './redux/filter';
+import { add, getContacts, remove } from './redux/contacts';
+import { getFilter, setFilter } from './redux/filter';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
 
   const reviseExistName = person => {
     return contacts.some(
@@ -37,10 +37,11 @@ export const App = () => {
   };
 
   const getFilterContacts = () => {
-    const normalizeFilter = filter.toLowerCase();
+    const normalizedFilter = filter.toLowerCase();
 
+    console.log(contacts);
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizeFilter)
+      contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
 
