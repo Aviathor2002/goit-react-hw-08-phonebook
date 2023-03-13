@@ -1,19 +1,16 @@
-import { useState, useEffect } from 'react';
 import { Phonebook } from './Phonebook/Phonebook';
 import { nanoid } from 'nanoid';
 import { Filter } from './Filter/Filter';
 import { Contacts } from './Contacts/Contacts';
 import { MainContainer, Title } from './App.style';
+import { useDispatch, useSelector } from 'react-redux';
+import { add, remove } from './redux/contacts';
+import { setFilter } from './redux/filter';
 
 export const App = () => {
-  const localContacts = JSON.parse(localStorage.getItem('contacts'));
-
-  const [contacts, setContacts] = useState(() => localContacts ?? []);
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
 
   const reviseExistName = person => {
     return contacts.some(
@@ -32,11 +29,11 @@ export const App = () => {
       return alert(`Sorry, but ${contact.name} is already in contacts`);
     }
 
-    setContacts([contact, ...contacts]);
+    dispatch(add(contact));
   };
 
   const changeFilter = e => {
-    setFilter(e.currentTarget.value);
+    dispatch(setFilter(e.target.value));
   };
 
   const getFilterContacts = () => {
@@ -48,7 +45,7 @@ export const App = () => {
   };
 
   const removeContact = id => {
-    setContacts(contacts.filter(contact => contact.id !== id));
+    dispatch(remove(id));
 
     return contacts;
   };
@@ -61,7 +58,7 @@ export const App = () => {
       <Phonebook onSubmitAccept={addContact} />
       <Title>Contacts</Title>
       <Filter value={filter} onChange={changeFilter} />
-      <Contacts contacts={filterContacts} receiveID={removeContact} />
+      <Contacts contactsList={filterContacts} receiveID={removeContact} />
     </MainContainer>
   );
 };

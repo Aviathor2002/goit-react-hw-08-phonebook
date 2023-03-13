@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
 import { List, Item, Text, Button } from './Contacts.style';
 
-export const Contacts = ({ contacts, receiveID }) => {
+export const Contacts = ({ contactsList, receiveID }) => {
   return (
     <List>
-      {contacts.map(({ id, name, number }) => {
+      {contactsList.map(({ id, name, number }) => {
         return (
           <Item key={id}>
             <Text>
@@ -24,17 +23,17 @@ export const Contacts = ({ contacts, receiveID }) => {
   );
 };
 
-Contacts.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+// Contacts.propTypes = {
+//   contacts: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.string.isRequired,
+//     }).isRequired
+//   ).isRequired,
 
-  receiveID: PropTypes.func.isRequired,
-};
+//   receiveID: PropTypes.func.isRequired,
+// };
 
 // Contacts.propTypes = {
 //   contacts: PropTypes.arrayOf(
