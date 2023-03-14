@@ -1,24 +1,26 @@
 import { List, Item, Text, Button } from './Contacts.style';
 
 export const Contacts = ({ contactsList, receiveID }) => {
+  console.log(contactsList);
   return (
     <List>
-      {contactsList.map(({ id, name, number }) => {
-        return (
-          <Item key={id}>
-            <Text>
-              {name}: {number}
-            </Text>
-            <Button
-              onClick={() => {
-                receiveID(id);
-              }}
-            >
-              Remove
-            </Button>
-          </Item>
-        );
-      })}
+      {contactsList &&
+        contactsList.map(({ id, name, number }) => {
+          return (
+            <Item key={id}>
+              <Text>
+                {name}: {number}
+              </Text>
+              <Button
+                onClick={() => {
+                  receiveID(id);
+                }}
+              >
+                Remove
+              </Button>
+            </Item>
+          );
+        })}
     </List>
   );
 };
