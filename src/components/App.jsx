@@ -11,6 +11,7 @@ export const App = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
+  console.log(contacts);
 
   const reviseExistName = person => {
     return contacts.some(
