@@ -4,7 +4,7 @@ import { Filter } from './Filter/Filter';
 import { Contacts } from './Contacts/Contacts';
 import { MainContainer, Title } from './App.style';
 import { useDispatch, useSelector } from 'react-redux';
-import { add, getContacts, remove } from './redux/contacts';
+import { add, remove, getContacts } from './redux/contacts';
 import { getFilter, setFilter } from './redux/filter';
 
 export const App = () => {
@@ -28,7 +28,7 @@ export const App = () => {
     if (reviseExistName(name)) {
       return alert(`Sorry, but ${contact.name} is already in contacts`);
     }
-
+    console.log(add);
     dispatch(add(contact));
   };
 
