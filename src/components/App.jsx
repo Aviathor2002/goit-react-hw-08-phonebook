@@ -28,7 +28,7 @@ export const App = () => {
     if (reviseExistName(name)) {
       return alert(`Sorry, but ${contact.name} is already in contacts`);
     }
-    console.log(add);
+
     dispatch(add(contact));
   };
 
@@ -39,7 +39,6 @@ export const App = () => {
   const getFilterContacts = () => {
     const normalizedFilter = filter.toLowerCase();
 
-    console.log(contacts);
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
