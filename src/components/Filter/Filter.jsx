@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import React from 'react';
 
 import { Input, Label } from './Filter.style';
-import { getFilter } from 'components/redux/filter';
+import { getFilter } from 'redux/filter';
 
 export const Filter = ({ onChange }) => {
   const contactFilter = useSelector(getFilter);

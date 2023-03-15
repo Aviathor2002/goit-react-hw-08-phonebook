@@ -4,8 +4,8 @@ import { Filter } from './Filter/Filter';
 import { Contacts } from './Contacts/Contacts';
 import { MainContainer, Title } from './App.style';
 import { useDispatch, useSelector } from 'react-redux';
-import { add, remove, getContacts } from './redux/contacts';
-import { getFilter, setFilter } from './redux/filter';
+import { add, remove, getContacts } from '../redux/contacts';
+import { getFilter, setFilter } from '../redux/filter';
 
 export const App = () => {
   const dispatch = useDispatch();
