@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
-const initialState = [
+const items = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
   { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
@@ -10,14 +10,14 @@ const initialState = [
 ];
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState,
+  initialState: { items },
 
   reducers: {
     add(state, action) {
-      state.contacts = [...state.contacts, action.payload];
+      state.items.push(action.payload);
     },
     remove(state, action) {
-      state.contacts = state.contacts.filter(
+      state.items = state.items.filter(
         contact => contact.id !== action.payload
       );
     },
@@ -26,7 +26,7 @@ const contactsSlice = createSlice({
 
 export const { add, remove } = contactsSlice.actions;
 
-export const getContacts = state => state.contacts.contacts;
+export const getContacts = state => state.contacts.items;
 
 const persistConfig = {
   key: 'contact',
