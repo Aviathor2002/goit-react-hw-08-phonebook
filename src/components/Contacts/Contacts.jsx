@@ -1,79 +1,44 @@
 import { List, Item, Text, Button } from './Contacts.style';
+import { remove, getContacts } from '../../redux/contacts';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFilter } from 'redux/filter';
 
-export const Contacts = ({ contactsList, receiveID }) => {
+export const Contacts = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+  const contactFilter = useSelector(getFilter);
+
+  const removeContact = id => {
+    dispatch(remove(id));
+  };
+
+  const contactsList =
+    contactFilter !== ''
+      ? contacts.filter(item =>
+          item.name.toLowerCase().includes(contactFilter.toLowerCase())
+        )
+      : contacts;
+
   console.log(contactsList);
+
   return (
     <List>
-      {contactsList &&
-        contactsList.map(({ id, name, number }) => {
-          return (
-            <Item key={id}>
-              <Text>
-                {name}: {number}
-              </Text>
-              <Button
-                onClick={() => {
-                  receiveID(id);
-                }}
-              >
-                Remove
-              </Button>
-            </Item>
-          );
-        })}
+      {contactsList.map(({ id, name, number }) => {
+        return (
+          <Item key={id}>
+            <Text>
+              {name}: {number}
+            </Text>
+            <Button
+              onClick={() => {
+                removeContact(id);
+              }}
+            >
+              Remove
+            </Button>
+          </Item>
+        );
+      })}
     </List>
   );
 };
-
-// Contacts.propTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     }).isRequired
-//   ).isRequired,
-
-//   receiveID: PropTypes.func.isRequired,
-// };
-
-// Contacts.propTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     })
-//   ).isRequired,
-//   receiveID: PropTypes.func.isRequired,
-// };
-
-// import React, { Component } from 'react';
-
-// class Contacts extends Component {
-//   render() {
-//     return (
-//       <ul>
-//         {this.props.contacts.map(({ id, name, number }) => {
-//           return (
-//             <li key={id}>
-//               <p>
-//                 {name}: {number}
-//               </p>
-//               <button
-//                 onClick={() => {
-//                   console.log(id);
-//                   this.props.receiveID(id);
-//                 }}
-//               >
-//                 Remove
-//               </button>
-//             </li>
-//           );
-//         })}
-//       </ul>
-//     );
-//   }
-// }
-
-// export default Contacts;

@@ -1,8 +1,10 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Form, Label, Button } from './Phonebook.style';
+import { add, getContacts } from '../../redux/contacts';
+import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from 'nanoid';
 
-export const Phonebook = ({ onSubmitAccept }) => {
+export const Phonebook = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -13,21 +15,41 @@ export const Phonebook = ({ onSubmitAccept }) => {
   const handleInputNumberChange = e => {
     setNumber(e.currentTarget.value);
   };
-  // handleInputChange = e => {
-  //   this.setState({ [e.currentTarget.name]: e.currentTarget.value });
-  // };
+
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    onSubmitAccept({ name, number });
+    addContact({ name, number });
 
     reset();
+  };
+
+  const addContact = ({ name, number }) => {
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+
+    if (reviseExistName(name)) {
+      return alert(`Sorry, but ${contact.name} is already in contacts`);
+    }
+
+    dispatch(add(contact));
   };
 
   const reset = () => {
     setName('');
     setNumber('');
+  };
+
+  const reviseExistName = person => {
+    return contacts.some(
+      contact => contact.name.toLowerCase() === person.toLowerCase()
+    );
   };
 
   return (
@@ -61,8 +83,4 @@ export const Phonebook = ({ onSubmitAccept }) => {
       </Button>
     </Form>
   );
-};
-
-Phonebook.propTypes = {
-  onSubmitAccept: PropTypes.func.isRequired,
 };
