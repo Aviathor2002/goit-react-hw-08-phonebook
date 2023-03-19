@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { Form, Label, Button } from './Phonebook.style';
-import { add, getContacts } from '../../redux/contacts';
+import { add } from '../../redux/contacts';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
+import {
+  useGetContactsListQuery,
+  usePostContactsListMutation,
+} from '../../redux/contacts';
 
 export const Phonebook = () => {
   const [name, setName] = useState('');
@@ -16,8 +20,9 @@ export const Phonebook = () => {
     setNumber(e.currentTarget.value);
   };
 
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const { data: contacts, error, isLoading } = useGetContactsListQuery();
+
+  const [contactPost, { isLoading: isPosting }] = usePostContactsListMutation();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -38,7 +43,7 @@ export const Phonebook = () => {
       return alert(`Sorry, but ${contact.name} is already in contacts`);
     }
 
-    dispatch(add(contact));
+    contactPost(contact);
   };
 
   const reset = () => {

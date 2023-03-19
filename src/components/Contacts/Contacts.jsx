@@ -1,16 +1,21 @@
 import { List, Item, Text, Button } from './Contacts.style';
-import { remove, getContacts } from '../../redux/contacts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilter } from 'redux/filter';
+import {
+  useGetContactsListQuery,
+  useDeleteContactsListMutation,
+} from 'redux/contacts';
 
 export const Contacts = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-  const contactFilter = useSelector(getFilter);
 
-  const removeContact = id => {
-    dispatch(remove(id));
-  };
+  const contactFilter = useSelector(getFilter);
+  const { data: contacts, error, isLoading } = useGetContactsListQuery();
+
+  const [contactDelete, { isLoading: isDeleting }] =
+    useDeleteContactsListMutation();
+
+  console.log(contacts);
 
   const contactsList =
     contactFilter !== ''
@@ -23,22 +28,19 @@ export const Contacts = () => {
 
   return (
     <List>
-      {contactsList.map(({ id, name, number }) => {
-        return (
-          <Item key={id}>
-            <Text>
-              {name}: {number}
-            </Text>
-            <Button
-              onClick={() => {
-                removeContact(id);
-              }}
-            >
-              Remove
-            </Button>
-          </Item>
-        );
-      })}
+      {contactsList &&
+        contactsList.map(({ id, name, number }) => {
+          return (
+            <Item key={id}>
+              <Text>
+                {name}: {number}
+              </Text>
+              <Button onClick={() => contactDelete(id)}>
+                {isDeleting ? 'Deleting...' : 'Remove'}
+              </Button>
+            </Item>
+          );
+        })}
     </List>
   );
 };
