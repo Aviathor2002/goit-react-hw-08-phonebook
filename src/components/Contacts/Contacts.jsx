@@ -1,21 +1,18 @@
 import { List, Item, Text, Button } from './Contacts.style';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getFilter } from 'redux/filter';
 import {
   useGetContactsListQuery,
   useDeleteContactsListMutation,
 } from 'redux/contacts';
+import Notiflix from 'notiflix';
 
 export const Contacts = () => {
-  const dispatch = useDispatch();
-
   const contactFilter = useSelector(getFilter);
-  const { data: contacts, error, isLoading } = useGetContactsListQuery();
+  const { data: contacts, error, isFetching } = useGetContactsListQuery();
 
-  const [contactDelete, { isLoading: isDeleting }] =
+  const [contactDelete, { isLoading: isDeleting, isSuccess: isDeleted }] =
     useDeleteContactsListMutation();
-
-  console.log(contacts);
 
   const contactsList =
     contactFilter !== ''
@@ -24,10 +21,13 @@ export const Contacts = () => {
         )
       : contacts;
 
-  console.log(contactsList);
-
   return (
     <List>
+      {isFetching &&
+        Notiflix.Loading.standard('Loading...', {
+          backgroundColor: 'rgba(0,0,0,0.8)',
+        })}
+      {!isFetching && Notiflix.Loading.remove()}
       {contactsList &&
         contactsList.map(({ id, name, number }) => {
           return (
@@ -35,9 +35,10 @@ export const Contacts = () => {
               <Text>
                 {name}: {number}
               </Text>
-              <Button onClick={() => contactDelete(id)}>
+              <Button onClick={() => contactDelete(id)} disabled={isDeleting}>
                 {isDeleting ? 'Deleting...' : 'Remove'}
               </Button>
+              {/* {isDeleted && Notiflix.Notify.failure(`${name} deleted`)} */}
             </Item>
           );
         })}

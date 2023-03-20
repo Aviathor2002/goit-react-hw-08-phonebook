@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { Form, Label, Button } from './Phonebook.style';
-import { add } from '../../redux/contacts';
-import { useDispatch, useSelector } from 'react-redux';
-import { nanoid } from 'nanoid';
 import {
   useGetContactsListQuery,
   usePostContactsListMutation,
 } from '../../redux/contacts';
+import Notiflix from 'notiflix';
 
 export const Phonebook = () => {
   const [name, setName] = useState('');
@@ -20,30 +18,52 @@ export const Phonebook = () => {
     setNumber(e.currentTarget.value);
   };
 
-  const { data: contacts, error, isLoading } = useGetContactsListQuery();
+  const confirmAddContact = ({ name, number }) => {
+    Notiflix.Confirm.show(
+      'Confirm adding contact',
+      `Do you want add ${name} to your contacts?`,
+      'Yes',
+      'No',
+      () => {
+        addContact({ name, number });
+      },
+      () => {
+        return;
+      }
+    );
+  };
+
+  const { data: contacts } = useGetContactsListQuery();
 
   const [contactPost, { isLoading: isPosting }] = usePostContactsListMutation();
 
   const handleSubmit = e => {
     e.preventDefault();
-
-    addContact({ name, number });
-
+    confirmAddContact({ name, number });
     reset();
   };
-
+  console.log(contacts);
   const addContact = ({ name, number }) => {
     const contact = {
-      id: nanoid(),
       name,
       number,
     };
 
     if (reviseExistName(name)) {
-      return alert(`Sorry, but ${contact.name} is already in contacts`);
+      return Notiflix.Report.warning(
+        'Warning!',
+        ` ${contact.name} is already in contacts`
+      );
     }
 
-    contactPost(contact);
+    try {
+      contactPost(contact);
+      Notiflix.Notify.success(`${name} added to contacs`);
+    } catch (error) {
+      Notiflix.Notify.failure(
+        ` Oops, someting went wrong, try again later! ${error}`
+      );
+    }
   };
 
   const reset = () => {
@@ -83,8 +103,9 @@ export const Phonebook = () => {
           required
         />
       </Label>
-      <Button type="submit" style={{ marginTop: 20 }}>
-        Add contact
+
+      <Button type="submit" style={{ marginTop: 20 }} disabled={isPosting}>
+        {isPosting ? 'Adding...' : ' Add contact'}
       </Button>
     </Form>
   );
