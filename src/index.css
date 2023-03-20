@@ -26,4 +26,6 @@ p {
 ul {
   margin: 0;
   list-style: none;
+  width: auto;
+  height: auto;
 }

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
-
-import { Input, Label } from './Filter.style';
+import { TextField } from '@mui/material';
+import { Label } from './Filter.style';
 import { getFilter, setFilter } from 'redux/filter';
 
 export const Filter = () => {
@@ -14,8 +14,14 @@ export const Filter = () => {
 
   return (
     <Label>
-      Find contacts by name:
-      <Input type="text" value={contactFilter} onChange={changeFilter} />
+      <TextField
+        fullWidth
+        label="Find contacts by name"
+        id="Number"
+        type="text"
+        value={contactFilter}
+        onChange={changeFilter}
+      />
     </Label>
   );
 };

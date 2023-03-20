@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { Form, Label, Button } from './Phonebook.style';
+import { Form, Label } from './Phonebook.style';
 import {
   useGetContactsListQuery,
   usePostContactsListMutation,
 } from '../../redux/contacts';
 import Notiflix from 'notiflix';
+import { Navigate } from 'react-router-dom';
+import { TextField } from '@mui/material';
+import Button from '@mui/material/Button';
 
 export const Phonebook = () => {
   const [name, setName] = useState('');
@@ -35,14 +38,15 @@ export const Phonebook = () => {
 
   const { data: contacts } = useGetContactsListQuery();
 
-  const [contactPost, { isLoading: isPosting }] = usePostContactsListMutation();
+  const [contactPost, { isLoading: isPosting, isSuccess }] =
+    usePostContactsListMutation();
 
   const handleSubmit = e => {
     e.preventDefault();
     confirmAddContact({ name, number });
     reset();
   };
-  console.log(contacts);
+
   const addContact = ({ name, number }) => {
     const contact = {
       name,
@@ -80,8 +84,10 @@ export const Phonebook = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <Label>
-        Name
-        <input
+        <TextField
+          fullWidth
+          label="Name"
+          id="Name"
           value={name}
           onChange={handleInputNameChange}
           type="text"
@@ -92,8 +98,10 @@ export const Phonebook = () => {
         />
       </Label>
       <Label>
-        Number
-        <input
+        <TextField
+          fullWidth
+          label="Number"
+          id="Number"
           value={number}
           onChange={handleInputNumberChange}
           type="tel"
@@ -103,10 +111,16 @@ export const Phonebook = () => {
           required
         />
       </Label>
-
-      <Button type="submit" style={{ marginTop: 20 }} disabled={isPosting}>
+      <Button
+        type="submit"
+        style={{ marginTop: 20 }}
+        disabled={isPosting}
+        variant="contained"
+      >
         {isPosting ? 'Adding...' : ' Add contact'}
       </Button>
+
+      {isSuccess && <Navigate to="/" replace />}
     </Form>
   );
 };

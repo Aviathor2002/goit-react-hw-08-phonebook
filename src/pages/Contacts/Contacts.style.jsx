@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const List = styled.ul`
@@ -59,4 +60,8 @@ export const Button = styled.button`
     box-shadow: rgba(207, 41, 50, 0.5) 0 0 0 3px;
     outline: none;
   }
+`;
+
+export const CardLink = styled(Link)`
+  text-decoration: none;
 `;
