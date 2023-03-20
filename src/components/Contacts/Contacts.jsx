@@ -9,9 +9,9 @@ import Notiflix from 'notiflix';
 
 export const Contacts = () => {
   const contactFilter = useSelector(getFilter);
-  const { data: contacts, error, isFetching } = useGetContactsListQuery();
+  const { data: contacts, isFetching } = useGetContactsListQuery();
 
-  const [contactDelete, { isLoading: isDeleting, isSuccess: isDeleted }] =
+  const [contactDelete, { isLoading: isDeleting }] =
     useDeleteContactsListMutation();
 
   const contactsList =
