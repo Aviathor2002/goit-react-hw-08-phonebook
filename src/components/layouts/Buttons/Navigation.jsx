@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { PersonIcon, PersonAddIcon } from '@mui/icons-material';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonIcon from '@mui/icons-material/Person';
 import { Item, Link, List } from './Navigation.styled';
 
 export const Navigation = () => {
