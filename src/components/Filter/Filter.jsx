@@ -21,6 +21,7 @@ export const Filter = () => {
         type="text"
         value={contactFilter}
         onChange={changeFilter}
+        sx={{ width: '100%' }}
       />
     </Label>
   );

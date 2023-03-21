@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-export const Container = styled.div`
-  position: relative;
-  left: 0;
+export const Section = styled.section`
+  background-color: #333;
+  overflow: hidden;
+  position: fixed;
   bottom: 0;
+  z-index: 1;
 `;
 
 export const List = styled.ul`
+  left: 0;
+  top: 0;
   list-style-type: none;
   margin: 0;
   padding: 0;

@@ -11,7 +11,12 @@ const Demo = styled('div')(({ theme }) => ({
 
 export const ContactsList = ({ list }) => {
   return (
-    <Grid item xs={20} md={6}>
+    <Grid
+      item
+      xs={20}
+      md={6}
+      sx={{ marginBottom: 10, marginTop: 8, width: '300px' }}
+    >
       <Demo>
         <List>
           {list.map(item => (

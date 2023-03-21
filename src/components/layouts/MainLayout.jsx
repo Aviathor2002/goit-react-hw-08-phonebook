@@ -5,11 +5,10 @@ import { Navigation } from './Buttons/Navigation';
 export const MainLayout = () => {
   return (
     <>
+      <Navigation />
       <Suspense fallback={<>Loading...</>}>
         <Outlet />
       </Suspense>
-
-      <Navigation />
     </>
   );
 };

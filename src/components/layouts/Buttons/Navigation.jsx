@@ -1,11 +1,11 @@
 import * as React from 'react';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonIcon from '@mui/icons-material/Person';
-import { Container, Item, Link, List } from './Navigation.styled';
+import { Item, Link, List, Section } from './Navigation.styled';
 
 export const Navigation = () => {
   return (
-    <Container>
+    <Section>
       <List>
         <Item>
           <Link
@@ -28,6 +28,6 @@ export const Navigation = () => {
           </Link>
         </Item>
       </List>
-    </Container>
+    </Section>
   );
 };

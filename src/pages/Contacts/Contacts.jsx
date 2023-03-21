@@ -4,6 +4,7 @@ import { useGetContactsListQuery } from 'redux/contacts';
 import Notiflix from 'notiflix';
 import { ContactsList } from 'components/Contacts/ContactsList';
 import { Filter } from 'components/Filter/Filter';
+import { Conteiner } from './Contacts.style';
 
 export const Contacts = () => {
   const contactFilter = useSelector(getFilter);
@@ -17,7 +18,7 @@ export const Contacts = () => {
       : contacts;
 
   return (
-    <>
+    <Conteiner>
       <Filter />
 
       {isFetching &&
@@ -26,6 +27,6 @@ export const Contacts = () => {
         })}
       {!isFetching && Notiflix.Loading.remove()}
       {contactsList && <ContactsList list={contactsList} />}
-    </>
+    </Conteiner>
   );
 };

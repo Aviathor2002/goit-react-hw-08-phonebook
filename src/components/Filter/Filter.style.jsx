@@ -3,14 +3,20 @@ import styled from 'styled-components';
 export const Label = styled.label`
   display: flex;
   flex-direction: column;
-  margin-top: 5px;
 
-  font-family: 'Roboto';
+  position: fixed;
+  top: 1%;
+  background-color: white;
+  width: 300px;
+
+  z-index: 2;
+
+  /* font-family: 'Roboto';
   font-style: normal;
   font-weight: 800;
   font-size: 20px;
   line-height: calc(20 / 24);
-  margin-top: 20px;
+  margin-top: 20px; */
 `;
 
 export const Input = styled.input`
