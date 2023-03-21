@@ -20,6 +20,21 @@ export const ContactProfile = () => {
   const [contactDelete, { isLoading: isDeleting, isSuccess: isDeleted }] =
     useDeleteContactsListMutation();
 
+  const confirmAddContact = ({ name, id }) => {
+    Notiflix.Confirm.show(
+      'Confirm deleting contact',
+      `Do you want delete ${name} to your contacts?`,
+      'Yes',
+      'No',
+      () => {
+        contactDelete({ id });
+      },
+      () => {
+        return;
+      }
+    );
+  };
+
   return (
     <Card sx={{ width: 350 }}>
       {isDeleting &&
@@ -49,7 +64,7 @@ export const ContactProfile = () => {
 
       <CardActions>
         <IconButton
-          onClick={() => contactDelete(id)}
+          onClick={() => confirmAddContact(contact.name, contact.id)}
           disabled={isDeleting}
           edge="end"
           aria-label="delete"
