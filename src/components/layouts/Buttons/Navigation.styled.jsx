@@ -25,7 +25,7 @@ export const Item = styled.li`
 `;
 
 export const Link = styled(NavLink)`
-  width: 100px;
+  width: 125px;
   display: block;
   color: white;
   background-color: #666;

@@ -14,7 +14,13 @@ export const ContactsItem = ({ item: { name, id } }) => {
             <AccountCircleSharpIcon fontSize="large" />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText color="black">{name}</ListItemText>
+        <ListItemText
+          sx={{
+            color: 'black',
+          }}
+        >
+          {name}
+        </ListItemText>
       </ListItemButton>
     </CardLink>
   );

@@ -7,6 +7,8 @@ export const MainContainer = styled.div`
   font-size: 40px;
   color: #010101;
   flex-direction: column;
+
+  position: relative;
 `;
 
 export const Title = styled.h1`

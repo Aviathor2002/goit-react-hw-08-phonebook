@@ -15,13 +15,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 export const ContactProfile = () => {
   const { id } = useParams();
 
-  const { data: contact } = useGetContactsCardQuery(id);
+  const { data: contact, isFetching } = useGetContactsCardQuery(id);
 
   const [contactDelete, { isLoading: isDeleting, isSuccess: isDeleted }] =
     useDeleteContactsListMutation();
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 350 }}>
       {isDeleting &&
         Notiflix.Loading.standard('Loading...', {
           backgroundColor: 'rgba(0,0,0,0.8)',
@@ -34,6 +34,7 @@ export const ContactProfile = () => {
             height="140"
             image={contact.avatar}
             alt={contact.name}
+            sx={{ height: 350 }}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
@@ -56,8 +57,13 @@ export const ContactProfile = () => {
           <DeleteIcon />
         </IconButton>
         {isDeleted && <Navigate to="/" replace />}
-        {isDeleted && Notiflix.Notify.info(`deleted`)}
+        {isDeleted && Notiflix.Notify.info(`${contact.name} deleted`)}
       </CardActions>
+      {isFetching &&
+        Notiflix.Loading.standard('Loading...', {
+          backgroundColor: 'rgba(0,0,0,0.8)',
+        })}
+      {!isFetching && Notiflix.Loading.remove()}
     </Card>
   );
 };
