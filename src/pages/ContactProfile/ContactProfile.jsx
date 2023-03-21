@@ -20,14 +20,14 @@ export const ContactProfile = () => {
   const [contactDelete, { isLoading: isDeleting, isSuccess: isDeleted }] =
     useDeleteContactsListMutation();
 
-  const confirmAddContact = ({ name, id }) => {
+  const confirmAddContact = (name, id) => {
     Notiflix.Confirm.show(
       'Confirm deleting contact',
       `Do you want delete ${name} to your contacts?`,
       'Yes',
       'No',
       () => {
-        contactDelete({ id });
+        contactDelete(id);
       },
       () => {
         return;
