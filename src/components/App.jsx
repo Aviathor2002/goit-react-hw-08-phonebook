@@ -5,6 +5,7 @@ import { Contacts } from 'pages/Contacts/Contacts';
 import { MainContainer } from './App.style';
 import { MainLayout } from './layouts/MainLayout';
 import { ContactProfile } from 'pages/ContactProfile/ContactProfile';
+import { RegistrationForm } from './RegistrationForm/RegistrationForm';
 
 export const App = () => {
   return (
@@ -14,6 +15,7 @@ export const App = () => {
           <Route index element={<Contacts />} />
           <Route path={'/addContact'} element={<Phonebook />} />
           <Route path={'/:id'} element={<ContactProfile />} />
+          <Route path={'/registration'} element={<RegistrationForm />} />
         </Route>
       </Routes>
     </MainContainer>
