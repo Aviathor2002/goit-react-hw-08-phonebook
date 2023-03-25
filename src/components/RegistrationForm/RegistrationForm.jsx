@@ -1,3 +1,6 @@
+import { Button, TextField } from '@mui/material';
+import { Form, Label } from 'pages/Phonebook/Phonebook.style';
+
 export const RegistrationForm = () => {
   //   const dispatch = useDispatch();
 
@@ -15,20 +18,42 @@ export const RegistrationForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="off">
-      <label>
-        Username
-        <input type="text" name="name" />
-      </label>
-      <label>
-        Email
-        <input type="email" name="email" />
-      </label>
-      <label>
-        Password
-        <input type="password" name="password" />
-      </label>
-      <button type="submit">Register</button>
-    </form>
+    <Form onSubmit={handleSubmit} autoComplete="off">
+      <Label>
+        <TextField
+          type="text"
+          name="name"
+          fullWidth
+          label="Username"
+          id="Username"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        />
+      </Label>
+      <Label>
+        <TextField
+          type="email"
+          name="email"
+          fullWidth
+          label="Email"
+          id="Email"
+          // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          // title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required
+        />
+      </Label>
+      <Label>
+        <TextField
+          type="password"
+          name="password"
+          label="Password"
+          id="Password"
+        />
+      </Label>
+      <Button type="submit" style={{ marginTop: 20 }} variant="contained">
+        Register
+      </Button>
+    </Form>
   );
 };
