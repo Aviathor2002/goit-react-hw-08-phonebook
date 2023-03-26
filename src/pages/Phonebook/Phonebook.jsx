@@ -1,85 +1,108 @@
-import { useState } from 'react';
 import { Form, Label } from './Phonebook.style';
-import {
-  useGetContactsListQuery,
-  usePostContactsListMutation,
-} from '../../redux/contacts';
-import Notiflix from 'notiflix';
-import { Navigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
+import { contactsOperations } from 'redux/contacts/contactsOperatoins';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Phonebook = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const contacts = useSelector(state => state.contacts.contacts);
 
-  const handleInputNameChange = e => {
-    setName(e.currentTarget.value);
-  };
-
-  const handleInputNumberChange = e => {
-    setNumber(e.currentTarget.value);
-  };
-
-  const confirmAddContact = ({ name, number }) => {
-    Notiflix.Confirm.show(
-      'Confirm adding contact',
-      `Do you want add ${name} to your contacts?`,
-      'Yes',
-      'No',
-      () => {
-        addContact({ name, number });
-      },
-      () => {
-        return;
-      }
-    );
-  };
-
-  const { data: contacts } = useGetContactsListQuery();
-
-  const [contactPost, { isLoading: isPosting, isSuccess }] =
-    usePostContactsListMutation();
-
+  const dispatch = useDispatch();
   const handleSubmit = e => {
     e.preventDefault();
-    confirmAddContact({ name, number });
-    reset();
-  };
+    const target = e.target.elements;
 
-  const addContact = ({ name, number }) => {
-    const contact = {
-      name,
-      number,
+    const isInContacts = contacts.find(
+      contact => contact.name.toLowerCase() === target.name.value.toLowerCase()
+    );
+
+    if (isInContacts) {
+      alert(`${target.name.value} is already in contacts. Please try again`);
+
+      return;
+    }
+
+    const formDatas = {
+      name: target.name.value,
+      number: target.number.value,
     };
 
-    if (reviseExistName(name)) {
-      return Notiflix.Report.warning(
-        'Warning!',
-        ` ${contact.name} is already in contacts`
-      );
-    }
+    dispatch(contactsOperations.addContact(formDatas));
 
-    try {
-      contactPost(contact);
-      Notiflix.Notify.success(`${name} added to contacs`);
-    } catch (error) {
-      Notiflix.Notify.failure(
-        ` Oops, someting went wrong, try again later! ${error}`
-      );
-    }
+    e.target.elements.name.value = '';
+    e.target.elements.number.value = '';
   };
 
-  const reset = () => {
-    setName('');
-    setNumber('');
-  };
+  // const [name, setName] = useState('');
+  // const [number, setNumber] = useState('');
 
-  const reviseExistName = person => {
-    return contacts.some(
-      contact => contact.name.toLowerCase() === person.toLowerCase()
-    );
-  };
+  // const handleInputNameChange = e => {
+  //   setName(e.currentTarget.value);
+  // };
+
+  // const handleInputNumberChange = e => {
+  //   setNumber(e.currentTarget.value);
+  // };
+
+  // const confirmAddContact = ({ name, number }) => {
+  //   Notiflix.Confirm.show(
+  //     'Confirm adding contact',
+  //     `Do you want add ${name} to your contacts?`,
+  //     'Yes',
+  //     'No',
+  //     () => {
+  //       addContact({ name, number });
+  //     },
+  //     () => {
+  //       return;
+  //     }
+  //   );
+  // };
+
+  // const { data: contacts } = useGetContactsListQuery();
+
+  // const [contactPost, { isLoading: isPosting, isSuccess }] =
+  //   usePostContactsListMutation();
+
+  // const handleSubmit = e => {
+  //   e.preventDefault();
+  //   confirmAddContact({ name, number });
+  //   reset();
+  // };
+
+  // const addContact = ({ name, number }) => {
+  //   const contact = {
+  //     name,
+  //     number,
+  //   };
+
+  //   if (reviseExistName(name)) {
+  //     return Notiflix.Report.warning(
+  //       'Warning!',
+  //       ` ${contact.name} is already in contacts`
+  //     );
+  //   }
+
+  //   try {
+  //     contactPost(contact);
+  //     Notiflix.Notify.success(`${name} added to contacs`);
+  //   } catch (error) {
+  //     Notiflix.Notify.failure(
+  //       ` Oops, someting went wrong, try again later! ${error}`
+  //     );
+  //   }
+  // };
+
+  // const reset = () => {
+  //   setName('');
+  //   setNumber('');
+  // };
+
+  // const reviseExistName = person => {
+  //   return contacts.some(
+  //     contact => contact.name.toLowerCase() === person.toLowerCase()
+  //   );
+  // };
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -88,8 +111,8 @@ export const Phonebook = () => {
           fullWidth
           label="Name"
           id="Name"
-          value={name}
-          onChange={handleInputNameChange}
+          // value={name}
+          // onChange={handleInputNameChange}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -102,8 +125,8 @@ export const Phonebook = () => {
           fullWidth
           label="Number"
           id="Number"
-          value={number}
-          onChange={handleInputNumberChange}
+          // value={number}
+          // onChange={handleInputNumberChange}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -114,13 +137,14 @@ export const Phonebook = () => {
       <Button
         type="submit"
         style={{ marginTop: 20 }}
-        disabled={isPosting}
+        // disabled={isPosting}
         variant="contained"
       >
-        {isPosting ? 'Adding...' : ' Add contact'}
+        Add contact
+        {/* {isPosting ? 'Adding...' : ' Add contact'} */}
       </Button>
 
-      {isSuccess && <Navigate to="/" replace />}
+      {/* {isSuccess && <Navigate to="/" replace />} */}
     </Form>
   );
 };
