@@ -1,7 +1,7 @@
 import { Button, TextField } from '@mui/material';
 import { Form, Label } from 'pages/Phonebook/Phonebook.style';
 import { useDispatch } from 'react-redux';
-import { authOperations } from 'redux/auth/operetion';
+import { register } from 'redux/auth/operetion';
 
 export const RegistrationForm = () => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ export const RegistrationForm = () => {
     e.preventDefault();
     const form = e.currentTarget;
     dispatch(
-      authOperations.register({
+      register({
         name: form.elements.name.value,
         email: form.elements.email.value,
         password: form.elements.password.value,

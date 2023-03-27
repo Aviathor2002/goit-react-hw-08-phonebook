@@ -7,6 +7,8 @@ import Avatar from '@mui/material/Avatar';
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import { useDispatch } from 'react-redux';
 import { contactsOperations } from 'redux/contacts/contactsOperatoins';
+import Button from '@mui/material/Button';
+
 export const ContactsItem = ({ item: { name, number, id } }) => {
   const dispatch = useDispatch();
 
@@ -25,14 +27,17 @@ export const ContactsItem = ({ item: { name, number, id } }) => {
       >
         {name}: {number}
       </ListItemText>
-      <button
+      <Button
+        variant="outlined"
+        color="error"
         onClick={() => {
           dispatch(contactsOperations.deleteContact(id));
         }}
       >
         Delete contact
-      </button>
+      </Button>
     </ListItem>
+
     // </CardLink>
   );
 };

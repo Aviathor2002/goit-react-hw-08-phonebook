@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Conteiner = styled.div`
-  /* position: relative; */
+  display: flex;
+  justify-content: center;
 `;
 export const List = styled.ul`
-  margin-top: 15px;
-  width: 350px;
+  margin-top: 300px;
+  width: 40 0px;
   display: flex;
   flex-direction: column;
   gap: 10px;

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { Button, TextField } from '@mui/material';
 import { Form, Label } from 'pages/Phonebook/Phonebook.style';
-import { authOperations } from 'redux/auth/operetion';
+import { logIn } from 'redux/auth/operetion';
 
 export const LogInForm = () => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ export const LogInForm = () => {
     e.preventDefault();
     const form = e.currentTarget;
     dispatch(
-      authOperations.logIn({
+      logIn({
         email: form.elements.email.value,
         password: form.elements.password.value,
       })

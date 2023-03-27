@@ -7,22 +7,25 @@ import { MainLayout } from './layouts/MainLayout';
 // import { ContactProfile } from 'pages/ContactProfile/ContactProfile';
 import { RegistrationForm } from '../pages/RegistrationForm/RegistrationForm';
 import { LogInForm } from '../pages/LogInForm/LogInForm';
-import { useDispatch /*useSelector*/ } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { authOperations } from 'redux/auth/operetion';
 import { RestrictedRoute } from './RestrictedRoute';
-// import authSelectors from 'redux/auth/selectors';
+import authSelectors from 'redux/auth/selectors';
 import { PrivateRoute } from './PrivateRoute';
+import { refreshUser } from 'redux/auth/operetion';
 
 export const App = () => {
-  // const isRefreshing = useSelector(authSelectors.getIsRefreshing);
+  const isRefreshing = useSelector(authSelectors.getIsRefreshing);
+  console.log(isRefreshing);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(authOperations.fetchCurrentUser());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
+  return isRefreshing ? (
+    'Loading...'
+  ) : (
     <MainContainer>
       <Routes>
         <Route path={'/'} element={<MainLayout />}>

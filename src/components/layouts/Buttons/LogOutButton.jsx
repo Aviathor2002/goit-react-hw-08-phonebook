@@ -1,18 +1,29 @@
 import authSelectors from 'redux/auth/selectors';
 import { useSelector, useDispatch } from 'react-redux';
-import { authOperations } from 'redux/auth/operetion';
+import { logOut } from 'redux/auth/operetion';
+import Button from '@mui/material/Button';
 
 export default function LogOutButton() {
   const dispatch = useDispatch();
   const name = useSelector(authSelectors.getUserName);
 
   return (
-    <>
-      {name !== null && <p>{`Welcome,  ${name}`}</p>}
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end ',
+      }}
+    >
+      {name !== null && (
+        <p
+          style={{ fontWeight: 500, fontSize: 18, paddingRight: 8 }}
+        >{`${name}`}</p>
+      )}
 
-      <button type="Button" onClick={() => dispatch(authOperations.logOut())}>
+      <Button type="Button" style={{}} onClick={() => dispatch(logOut())}>
         Logout
-      </button>
-    </>
+      </Button>
+    </div>
   );
 }

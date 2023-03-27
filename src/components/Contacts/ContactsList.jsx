@@ -37,7 +37,7 @@ export const ContactsList = ({ list }) => {
       item
       xs={20}
       md={6}
-      sx={{ marginBottom: 10, marginTop: 8, width: '300px' }}
+      sx={{ marginBottom: 10, marginTop: 8, width: '500px' }}
     >
       <Demo>
         <List>
@@ -50,9 +50,3 @@ export const ContactsList = ({ list }) => {
     </Grid>
   );
 };
-
-//   return (
-//     <ul>
-//
-//     </ul>
-//   );
