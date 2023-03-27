@@ -11,8 +11,6 @@ const contactsSlice = createSlice({
   initialState,
   extraReducers: {
     [contactsOperations.getContact.fulfilled](state, action) {
-      console.log(action.payload);
-
       state.contacts = action.payload;
     },
     [contactsOperations.addContact.fulfilled]: (state, action) => {

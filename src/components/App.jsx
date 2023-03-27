@@ -16,7 +16,6 @@ import { refreshUser } from 'redux/auth/operetion';
 
 export const App = () => {
   const isRefreshing = useSelector(authSelectors.getIsRefreshing);
-  console.log(isRefreshing);
 
   const dispatch = useDispatch();
   useEffect(() => {
